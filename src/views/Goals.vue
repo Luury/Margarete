@@ -2,20 +2,20 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Home</ion-title>
+        <ion-title>Metas</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">Hello World</ion-content>
   </ion-page>
 </template>
 
-<script>
+<script lang="ts">
 import { 
   IonContent, 
   IonHeader,
   IonPage,
   IonTitle,
-  IonToolbar,
+  IonToolbar
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
