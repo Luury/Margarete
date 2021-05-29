@@ -28,7 +28,9 @@
             <ion-item-option :router-link="`/EditTransaction/${transaction.id}`"
               >Editar</ion-item-option
             >
-            <ion-item-option color="danger" @click="Delete(item)"
+            <ion-item-option
+              color="danger"
+              @click="DeleteTransaction(transaction.id)"
               >Excluir</ion-item-option
             >
           </ion-item-options>
@@ -39,7 +41,8 @@
 </template>
 
 <script>
-import TransactionsData from "./TransactionsData.json";
+import Transactions from "../services/transactions";
+import Store from "../store/index";
 
 import { defineComponent } from "vue";
 import {
@@ -78,6 +81,13 @@ export default defineComponent({
     IonButtons,
     IonBackButton,
   },
+  updated() {
+    Store.get().then((response) => {
+      Transactions.list(response).then((response) => {
+        this.transactions = response.data;
+      });
+    });
+  },
   setup() {
     return {
       homeOutline,
@@ -85,8 +95,19 @@ export default defineComponent({
   },
   data() {
     return {
-      transactions: TransactionsData.transactions,
+      transactions: [],
     };
+  },
+  methods: {
+    DeleteTransaction(TransactionId) {
+      Store.get().then((response) => {
+        Transactions.delete(TransactionId, response).then((response) => {
+          if (response.status == 200) {
+            this.$forceUpdate();
+          }
+        });
+      });
+    },
   },
 });
 </script>

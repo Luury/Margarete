@@ -19,22 +19,25 @@
         <ion-item>
           <ion-icon slot="start" :icon="mail"></ion-icon>
           <ion-label position="floating">E-Mail</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="email" v-model="email"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-icon slot="start" :icon="key"></ion-icon>
           <ion-label position="floating">Senha</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="password" v-model="password"></ion-input>
         </ion-item>
 
-        <ion-button v-on:click="onClick()">Entrar</ion-button>
+        <ion-button v-on:click="submit()">Entrar</ion-button>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
+import User from "../services/user";
+import Store from "../store/index";
+
 import {
   IonButton,
   IonPage,
@@ -76,6 +79,22 @@ export default defineComponent({
       mail,
       key,
     };
+  },
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    submit() {
+      User.auth(this.$data).then((response) => {
+        if (response.status == 200) {
+          Store.set(response.data.token);
+          this.$router.push("/home");
+        }
+      });
+    },
   },
 });
 </script>

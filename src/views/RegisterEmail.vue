@@ -11,40 +11,48 @@
 
     <ion-content>
       <div>
-          <ion-img src="assets/icon/favicon.png"></ion-img>
+        <ion-img src="assets/icon/favicon.png"></ion-img>
         <h1>Crie sua conta em poucos passos</h1>
 
         <ion-item>
           <ion-icon slot="start" :icon="person"></ion-icon>
           <ion-label position="floating">Nome</ion-label>
-          <ion-input></ion-input>
+          <ion-input v-model="username"></ion-input>
         </ion-item>
 
         <ion-item>
-           <ion-icon slot="start" :icon="mail"></ion-icon>
+          <ion-icon slot="start" :icon="mail"></ion-icon>
           <ion-label position="floating">E-Mail</ion-label>
-          <ion-input></ion-input>
+          <ion-input v-model="email" type="email"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-icon slot="start" :icon="idCard"></ion-icon>
           <ion-label position="floating">CPF</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="number" v-model="cpf"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-icon slot="start" :icon="key"></ion-icon>
           <ion-label position="floating">Senha</ion-label>
-          <ion-input></ion-input>
+          <ion-input
+            type="password"
+            placeholder="Digite uma senha"
+            v-model="password"
+          ></ion-input>
         </ion-item>
 
-        <ion-button v-on:click="onClick()">Cadastrar</ion-button>
+        <ion-button v-on:click="submit()">Cadastrar</ion-button>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
+
 <script>
+import User from "../services/user";
+import Store from "../store/index";
+
 import {
   IonButton,
   IonPage,
@@ -89,6 +97,24 @@ export default defineComponent({
       idCard,
     };
   },
+  data() {
+    return {
+      username: "",
+      email: "",
+      cpf: "",
+      password: "",
+    };
+  },
+  methods: {
+    submit() {
+      User.create(this.$data).then((response) => {
+        if (response.status == 200) {
+          Store.set(response.data.token);
+          this.$router.push("/home");
+        }
+      });
+    },
+  },
 });
 </script>
 
@@ -117,7 +143,7 @@ ion-item {
   border-radius: 10px;
 }
 
-ion-icon{
+ion-icon {
   padding-top: 4px;
 }
 
@@ -130,5 +156,4 @@ h1 {
   font-size: 4vw;
   margin-bottom: 7vw;
 }
-
 </style>

@@ -5,38 +5,45 @@
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
-                  <ion-title>Nova Transação</ion-title>
+        <ion-title>Nova Transação</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
       <ion-item>
-        <ion-radio-group id="type">
+        <ion-radio-group v-model="transaction.type">
           <ion-item>
             <ion-label>Despesa</ion-label>
-            <ion-radio value="Despesa"></ion-radio>
+            <ion-radio value="1"></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Receita</ion-label>
-            <ion-radio value="Receita"></ion-radio>
+            <ion-radio value="2"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Descrição</ion-label>
-        <ion-input id="description" type="text"></ion-input>
+        <ion-input v-model="transaction.description" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Data</ion-label>
-        <ion-datetime id="date" display-format="MM DD YY"></ion-datetime>
+        <ion-datetime
+          v-model="transaction.date"
+          display-format="MM DD YY"
+        ></ion-datetime>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Categoria</ion-label>
-        <ion-select id="category" ok-text="Okay" cancel-text="Dismiss">
+        <ion-select
+          v-model="transaction.category"
+          ok-text="Okay"
+          cancel-text="Dismiss"
+        >
           <ion-select-option value="Casa">Casa</ion-select-option>
           <ion-select-option value="Alimentação">Alimentação</ion-select-option>
         </ion-select>
@@ -44,7 +51,7 @@
 
       <ion-item>
         <ion-label position="floating">Valor</ion-label>
-        <ion-input id="value" type="number"></ion-input>
+        <ion-input v-model="transaction.value" type="number"></ion-input>
       </ion-item>
     </ion-content>
 
@@ -57,7 +64,8 @@
 </template>
 
 <script>
-import TransactionsData from "./TransactionsData.json";
+import Transactions from "../services/transactions";
+import Store from "../store/index";
 
 import {
   IonPage,
@@ -113,20 +121,24 @@ export default defineComponent({
   },
   data() {
     return {
-      transactions: TransactionsData.transactions,
+      transaction: {
+        type: "",
+        description: "",
+        date: "",
+        category: "",
+        value: "",
+      },
     };
   },
   methods: {
     AddTransaction() {
-      this.transactions.push({
-        id: 5,
-        type: document.getElementById("type").value,
-        description: document.getElementById("description").value,
-        date: document.getElementById("date").value,
-        category: document.getElementById("category").value,
-        value: document.getElementById("value").value
-    })
-
+      Store.get().then((response) => {
+        Transactions.create(this.transaction, response).then((response) => {
+          if (response.status == 200) {
+            this.$router.push("/transactions");
+          }
+        });
+      });
     },
   },
 });
