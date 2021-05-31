@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Nova Transação</ion-title>
+        <ion-title>Nova Conta</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -29,10 +29,6 @@
         <ion-input v-model="account.description" type="text"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Saldo Atual</ion-label>
-        <ion-input v-model="account.balance" type="number"></ion-input>
-      </ion-item>
     </ion-content>
 
     <ion-fab vertical="bottom" horizontal="center">
@@ -98,7 +94,6 @@ export default defineComponent({
       account: {
         type: "",
         description: "",
-        balance: "",
       },
     };
   },
