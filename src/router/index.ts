@@ -4,6 +4,7 @@ import WelcomePage from '../views/Welcome.vue';
 import LoginPage from '../views/Login.vue';
 import LoginEmailPage from '../views/LoginEmail.vue';
 import RegisterPage from '../views/Register.vue';
+import RegisterEmailPage from '../views/RegisterEmail.vue';
 import Tabs from '../views/Tabs.vue';
 import HomePage from '../views/Home.vue';
 import TransactionsPage from '../views/Transactions.vue';
@@ -11,7 +12,10 @@ import AddTransactionPage from '../views/AddTransaction.vue';
 import EditTransactionPage from '../views/EditTransaction.vue';
 import GoalsPage from '../views/Goals.vue';
 import MorePage from '../views/More.vue';
-import RegisterEmailPage from '../views/RegisterEmail.vue';
+import AccountsPage from '../views/Accounts.vue';
+import AddAccountPage from '../views/AddAccount.vue';
+import EditAccountPage from '../views/EditAccount.vue';
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -78,6 +82,21 @@ const routes: Array<RouteRecordRaw> = [
     path: '/EditTransaction/:id',
     name: 'EditTransaction',
     component: EditTransactionPage
+  },
+  {
+    path: '/Accounts',
+    name: 'Accouts',
+    component: AccountsPage
+  },
+  {
+    path: '/AddAccount/',
+    name: 'AddAccount',
+    component: AddAccountPage
+  },
+  {
+    path: '/EditAccount/:id',
+    name: 'EditAccount',
+    component: EditAccountPage
   }
 ]
 

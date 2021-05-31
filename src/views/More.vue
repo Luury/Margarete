@@ -5,7 +5,9 @@
         <ion-title>Mais Opções</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding">Hello World</ion-content>
+    <ion-content class="ion-padding">
+      <ion-button router-link="/accounts" expand="block">Contas</ion-button>
+    </ion-content>
   </ion-page>
 </template>
 
@@ -15,7 +17,8 @@ import {
   IonHeader,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonButton
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
@@ -25,7 +28,8 @@ export default defineComponent({
     IonHeader,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonButton
   }
 });
 </script>

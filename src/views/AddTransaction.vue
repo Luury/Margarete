@@ -25,6 +25,22 @@
       </ion-item>
 
       <ion-item>
+        <ion-label position="floating">Conta</ion-label>
+        <ion-select
+          v-model="transaction.account_id"
+          ok-text="Okay"
+          cancel-text="Dismiss"
+        >
+          <ion-select-option
+            v-for="account in accounts"
+            :key="account.id"
+            :value="account.id"
+            >{{ account.description }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
         <ion-label position="floating">Descrição</ion-label>
         <ion-input v-model="transaction.description" type="text"></ion-input>
       </ion-item>
@@ -66,6 +82,7 @@
 <script>
 import Transactions from "../services/transactions";
 import Store from "../store/index";
+import Accounts from "../services/accounts";
 
 import {
   IonPage,
@@ -119,15 +136,24 @@ export default defineComponent({
       checkmark,
     };
   },
+  updated() {
+    Store.get().then((response) => {
+      Accounts.list(response).then((response) => {
+        this.accounts = response.data;
+      });
+    });
+  },
   data() {
     return {
       transaction: {
         type: "",
+        account_id: "",
         description: "",
         date: "",
         category: "",
         value: "",
       },
+      accounts: [],
     };
   },
   methods: {
