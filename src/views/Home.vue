@@ -11,20 +11,20 @@
       
       <ion-item>
         <ion-label position="floating">Saldo Geral</ion-label>
-        <ion-input v-model="resume.geral" type="number"> </ion-input>
-        <ion-note  slot="end">{{resume.geralAmount}}</ion-note>
+        <ion-input v-model="resume.balance" type="number"> </ion-input>
+        <ion-note  slot="end">{{resume.balanceAmount}}</ion-note>
       </ion-item>
       
       <ion-item>
         <ion-label position="floating" color="success">Receitas</ion-label>
-        <ion-input  v-model="resume.receita" type="number"> </ion-input>
-        <ion-note slot="end" color="success">{{resume.receitaAmount}}</ion-note>
+        <ion-input  v-model="resume.revenue" type="number"> </ion-input>
+        <ion-note slot="end" color="success">{{resume.revenueAmount}}</ion-note>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating" color="danger">Despesas</ion-label>
-        <ion-input v-model="resume.despesa" type="number"> </ion-input>
-        <ion-note slot="end" color="danger">{{resume.despesaAmount}}</ion-note>
+        <ion-input v-model="resume.expense" type="number"> </ion-input>
+        <ion-note slot="end" color="danger">{{resume.expenseAmount}}</ion-note>
       </ion-item>
 
     </ion-content>
@@ -65,12 +65,12 @@ export default defineComponent({
     Store.get().then((response) => {
       Home.resume(response).then(
         (response) => {
-          this.resume.geral = response.data.geral + "";
-          this.resume.receita = response.data.receita + "";
-          this.resume.despesa = response.data.despesa + "";
-          this.resume.geralAmount = response.data.geralAmount + "";
-          this.resume.receitaAmount = response.data.receitaAmount + "";
-          this.resume.despesaAmount = response.data.despesaAmount + "";
+          this.resume.balance = response.data.balance + "";
+          this.resume.revenue = response.data.revenue + "";
+          this.resume.expense = response.data.expense + "";
+          this.resume.balanceAmount = response.data.balanceAmount + "";
+          this.resume.revenueAmount = response.data.revenueAmount + "";
+          this.resume.expenseAmount = response.data.expenseAmount + "";
         }
       );
       User.info(response).then(
@@ -83,12 +83,12 @@ export default defineComponent({
   data() {
     return {
       resume: {
-        geral: "",
-        receita: "",
-        despesa: "",
-        geralAmount: "",
-        receitaAmount: "",
-        despesaAmount: "",
+        balance: "",
+        revenue: "",
+        expense: "",
+        balanceAmount: "",
+        revenueAmount: "",
+        expenseAmount: "",
       },
       user: {
         username: "",
