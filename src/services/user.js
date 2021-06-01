@@ -10,6 +10,10 @@ export default {
         return http.post('/user/auth', credentials)
     },
 
+    info: (token) => {
+        return http.get('/user/info', { headers: { "Authorization": `Bearer ${token}` } })
+    },
+
     update: () => {
         return http.put('')
     },
