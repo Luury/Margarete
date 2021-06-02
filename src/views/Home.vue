@@ -6,27 +6,59 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
+      <ion-label>Olá {{ this.user.username }}, bom dia!</ion-label>
 
-      <ion-label>Olá {{this.user.username}}, bom dia!</ion-label>
-      
       <ion-item>
         <ion-label position="floating">Saldo Geral</ion-label>
         <ion-input v-model="resume.balance" type="number"> </ion-input>
-        <ion-note  slot="end">{{resume.balanceAmount}}</ion-note>
+        <ion-note slot="end">{{ resume.balanceAmount }}</ion-note>
       </ion-item>
-      
+
       <ion-item>
         <ion-label position="floating" color="success">Receitas</ion-label>
-        <ion-input  v-model="resume.revenue" type="number"> </ion-input>
-        <ion-note slot="end" color="success">{{resume.revenueAmount}}</ion-note>
+        <ion-input v-model="resume.revenue" type="number"> </ion-input>
+        <ion-note slot="end" color="success">{{
+          resume.revenueAmount
+        }}</ion-note>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating" color="danger">Despesas</ion-label>
         <ion-input v-model="resume.expense" type="number"> </ion-input>
-        <ion-note slot="end" color="danger">{{resume.expenseAmount}}</ion-note>
+        <ion-note slot="end" color="danger">{{
+          resume.expenseAmount
+        }}</ion-note>
       </ion-item>
 
+      <ion-label>Resumo de Contas:</ion-label>
+
+      <ion-item v-for="account in accounts" :key="account.id">
+        <ion-label>
+          <h2>{{ account.description }}</h2>
+
+          <ion-item>
+            <ion-label position="floating">Saldo Geral</ion-label>
+            <ion-input v-model="account.balance" type="number"> </ion-input>
+            <ion-note slot="end">{{ account.balanceAmount }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating" color="success">Receitas</ion-label>
+            <ion-input v-model="account.revenue" type="number"> </ion-input>
+            <ion-note slot="end" color="success">{{
+              account.revenueAmount
+            }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating" color="danger">Despesas</ion-label>
+            <ion-input v-model="account.expense" type="number"> </ion-input>
+            <ion-note slot="end" color="danger">{{
+              account.expenseAmount
+            }}</ion-note>
+          </ion-item>
+        </ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
@@ -34,10 +66,11 @@
 <script>
 import Home from "../services/home";
 import User from "../services/user";
+import Accounts from "../services/accounts";
 import Store from "../store/index";
 
-import { 
-  IonContent, 
+import {
+  IonContent,
   IonHeader,
   IonPage,
   IonTitle,
@@ -46,12 +79,12 @@ import {
   IonLabel,
   IonInput,
   IonNote,
-} from '@ionic/vue';
-import { defineComponent } from 'vue';
+} from "@ionic/vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {
-    IonContent, 
+    IonContent,
     IonHeader,
     IonPage,
     IonTitle,
@@ -63,21 +96,20 @@ export default defineComponent({
   },
   updated() {
     Store.get().then((response) => {
-      Home.resume(response).then(
-        (response) => {
-          this.resume.balance = response.data.balance + "";
-          this.resume.revenue = response.data.revenue + "";
-          this.resume.expense = response.data.expense + "";
-          this.resume.balanceAmount = response.data.balanceAmount + "";
-          this.resume.revenueAmount = response.data.revenueAmount + "";
-          this.resume.expenseAmount = response.data.expenseAmount + "";
-        }
-      );
-      User.info(response).then(
-        (response) => {
-          this.user.username = response.data.username + "";
-        }
-      );
+      Home.resume(response).then((response) => {
+        this.resume.balance = response.data.balance + "";
+        this.resume.revenue = response.data.revenue + "";
+        this.resume.expense = response.data.expense + "";
+        this.resume.balanceAmount = response.data.balanceAmount + "";
+        this.resume.revenueAmount = response.data.revenueAmount + "";
+        this.resume.expenseAmount = response.data.expenseAmount + "";
+      });
+      User.info(response).then((response) => {
+        this.user.username = response.data.username + "";
+      });
+      Accounts.list(response).then((response) => {
+        this.accounts = response.data;
+      });
     });
   },
   data() {
@@ -93,6 +125,7 @@ export default defineComponent({
       user: {
         username: "",
       },
+      accounts: [],
     };
   },
 });
