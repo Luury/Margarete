@@ -54,14 +54,18 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Categoria</ion-label>
+        <ion-label position="floating">Categorias</ion-label>
         <ion-select
+          v-model="transaction.category_id"
           ok-text="Okay"
           cancel-text="Dismiss"
-          v-model="transaction.category"
         >
-          <ion-select-option value="Casa">Casa</ion-select-option>
-          <ion-select-option value="Alimentação">Alimentação</ion-select-option>
+          <ion-select-option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+            >{{ category.description }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
 
@@ -83,6 +87,7 @@
 import Transactions from "../services/transactions";
 import Store from "../store/index";
 import Accounts from "../services/accounts";
+import Categories from "../services/categories";
 
 import {
   IonPage,
@@ -142,6 +147,7 @@ export default defineComponent({
         (response) => {
           this.transaction.type = response.data.type + "";
           this.transaction.account_id = response.data.account_id;
+          this.transaction.category_id = response.data.category_id;
           this.transaction.description = response.data.description + "";
           this.transaction.date = response.data.date.replace("Z", "") + "";
           this.transaction.category = response.data.category + "";
@@ -150,6 +156,9 @@ export default defineComponent({
       );
       Accounts.list(response).then((response) => {
         this.accounts = response.data;
+      });
+      Categories.list(response).then((response) => {
+        this.categories = response.data;
       });
     });
   },
@@ -160,10 +169,11 @@ export default defineComponent({
         account_id: "",
         description: "",
         date: "",
-        category: "",
+        category_id: "",
         value: "",
       },
       accounts: [],
+      categories: [],
     };
   },
   methods: {
