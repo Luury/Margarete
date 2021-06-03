@@ -7,6 +7,7 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-button router-link="/accounts" expand="block">Contas</ion-button>
+      <ion-button router-link="/categories" expand="block">Categorias</ion-button>
     </ion-content>
   </ion-page>
 </template>
