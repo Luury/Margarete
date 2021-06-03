@@ -15,6 +15,9 @@ import MorePage from '../views/More.vue';
 import AccountsPage from '../views/Accounts.vue';
 import AddAccountPage from '../views/AddAccount.vue';
 import EditAccountPage from '../views/EditAccount.vue';
+import CategoriesPage from '../views/Categories.vue';
+import AddCategoryPage from '../views/AddCategory.vue';
+import EditCategoryPage from '../views/EditCategory.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -97,6 +100,21 @@ const routes: Array<RouteRecordRaw> = [
     path: '/EditAccount/:id',
     name: 'EditAccount',
     component: EditAccountPage
+  },
+  {
+    path: '/Categories',
+    name: 'Categories',
+    component: CategoriesPage
+  },
+  {
+    path: '/AddCategory/',
+    name: 'AddCategory',
+    component: AddCategoryPage
+  },
+  {
+    path: '/EditCategory/:id',
+    name: 'EditCategory',
+    component: EditCategoryPage
   }
 ]
 

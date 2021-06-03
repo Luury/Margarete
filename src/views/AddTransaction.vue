@@ -54,14 +54,18 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Categoria</ion-label>
+        <ion-label position="floating">Categorias</ion-label>
         <ion-select
-          v-model="transaction.category"
+          v-model="transaction.category_id"
           ok-text="Okay"
           cancel-text="Dismiss"
         >
-          <ion-select-option value="Casa">Casa</ion-select-option>
-          <ion-select-option value="Alimentação">Alimentação</ion-select-option>
+          <ion-select-option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+            >{{ category.description }}</ion-select-option
+          >
         </ion-select>
       </ion-item>
 
@@ -83,6 +87,8 @@
 import Transactions from "../services/transactions";
 import Store from "../store/index";
 import Accounts from "../services/accounts";
+import Categories from "../services/categories";
+
 
 import {
   IonPage,
@@ -141,6 +147,9 @@ export default defineComponent({
       Accounts.list(response).then((response) => {
         this.accounts = response.data;
       });
+      Categories.list(response).then((response) => {
+        this.categories = response.data;
+      });
     });
   },
   data() {
@@ -150,10 +159,11 @@ export default defineComponent({
         account_id: "",
         description: "",
         date: "",
-        category: "",
+        category_id: "",
         value: "",
       },
       accounts: [],
+      categories: [],
     };
   },
   methods: {
