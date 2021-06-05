@@ -10,7 +10,6 @@ import HomePage from '../views/Home.vue';
 import TransactionsPage from '../views/Transactions.vue';
 import AddTransactionPage from '../views/AddTransaction.vue';
 import EditTransactionPage from '../views/EditTransaction.vue';
-import GoalsPage from '../views/Goals.vue';
 import MorePage from '../views/More.vue';
 import AccountsPage from '../views/Accounts.vue';
 import AddAccountPage from '../views/AddAccount.vue';
@@ -18,6 +17,13 @@ import EditAccountPage from '../views/EditAccount.vue';
 import CategoriesPage from '../views/Categories.vue';
 import AddCategoryPage from '../views/AddCategory.vue';
 import EditCategoryPage from '../views/EditCategory.vue';
+
+import GoalsPage from '../views/Goals.vue';
+import AddGoalPage from '../views/AddGoal.vue';
+import EditGoalPage from '../views/EditGoal.vue';
+import GoalsTransactionsPage from '../views/EditGoal.vue';
+import AddGoalsTransactionsPage from '../views/AddGoalTransaction.vue';
+import EditGoalsTransactionsPage from '../views/EditGoalTransaction.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -66,10 +72,10 @@ const routes: Array<RouteRecordRaw> = [
         path: '/Transactions',
         component: TransactionsPage
       },
-      {
+      {//-----------------------------------------------------GOALS
         path: '/Goals',
-        component: GoalsPage
-      },
+        component: GoalsPage,
+      },//----------------------------------------------------FIM GOALS
       {
         path: '/More',
         component: MorePage
@@ -115,7 +121,32 @@ const routes: Array<RouteRecordRaw> = [
     path: '/EditCategory/:id',
     name: 'EditCategory',
     component: EditCategoryPage
-  }
+  },
+  {
+    path: '/AddGoal',
+    name:'AddGoalPage',
+    component: AddGoalPage, 
+  },
+  {
+    path: '/EditGoal/:id',
+    name:'EditGoalPage',
+    component: EditGoalPage, 
+  },
+  {
+    path: '/:id/Transactions',
+    name:'GoalTransactionsPage',
+    component: GoalsTransactionsPage, 
+  },
+  {
+    path: '/:id/AddTransaction',
+    name:'AddGoalTransactionsPage',
+    component: AddGoalsTransactionsPage, 
+  },
+  {
+    path: '/:id/EditTransaction/:idT',
+    name:'EditGoalTransactionsPage',
+    component: EditGoalsTransactionsPage, 
+  },
 ]
 
 const router = createRouter({
