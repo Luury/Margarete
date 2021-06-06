@@ -22,8 +22,6 @@ import GoalsPage from '../views/Goals.vue';
 import AddGoalPage from '../views/AddGoal.vue';
 import EditGoalPage from '../views/EditGoal.vue';
 import GoalsTransactionsPage from '../views/EditGoal.vue';
-import AddGoalsTransactionsPage from '../views/AddGoalTransaction.vue';
-import EditGoalsTransactionsPage from '../views/EditGoalTransaction.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -72,10 +70,10 @@ const routes: Array<RouteRecordRaw> = [
         path: '/Transactions',
         component: TransactionsPage
       },
-      {//-----------------------------------------------------GOALS
+      {
         path: '/Goals',
         component: GoalsPage,
-      },//----------------------------------------------------FIM GOALS
+      },
       {
         path: '/More',
         component: MorePage
@@ -131,22 +129,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/EditGoal/:id',
     name:'EditGoalPage',
     component: EditGoalPage, 
-  },
-  {
-    path: '/:id/Transactions',
-    name:'GoalTransactionsPage',
-    component: GoalsTransactionsPage, 
-  },
-  {
-    path: '/:id/AddTransaction',
-    name:'AddGoalTransactionsPage',
-    component: AddGoalsTransactionsPage, 
-  },
-  {
-    path: '/:id/EditTransaction/:idT',
-    name:'EditGoalTransactionsPage',
-    component: EditGoalsTransactionsPage, 
-  },
+  }
 ]
 
 const router = createRouter({
