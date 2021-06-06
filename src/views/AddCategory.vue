@@ -19,6 +19,7 @@
         >
           <ion-select-option value="1">Despesa</ion-select-option>
           <ion-select-option value="2">Receita</ion-select-option>
+          <ion-select-option value="3">Investimento</ion-select-option>
     
         </ion-select>
       </ion-item>

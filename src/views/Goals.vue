@@ -2,8 +2,10 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button default-href="/home"></ion-back-button>
+        <ion-buttons slot="end">
+          <ion-button router-link="/addGoal">
+            <ion-icon slot="icon-only" :icon="add"></ion-icon>
+          </ion-button>
         </ion-buttons>
         <ion-title>Metas</ion-title>
       </ion-toolbar>
@@ -11,19 +13,14 @@
 
     <ion-content>
       <ion-list>
-        <ion-item-sliding
-          v-for="goal in goals"
-          :key="goal.id"
-        >
+        <ion-item-sliding v-for="goal in goals" :key="goal.id">
           <ion-item>
             <ion-icon :icon="homeOutline"></ion-icon>
             <ion-label>
               <h2>{{ goal.description }}</h2>
-              <h3>{{ goal.value_start }}</h3>
-              <h3>{{ goal.value_end }}</h3>
+              <h3>{{ goal.value}}</h3>
               <h4>{{ goal.date_start }}</h4>
               <h4>{{ goal.date_end }}</h4>
-              
             </ion-label>
           </ion-item>
 
@@ -31,9 +28,7 @@
             <ion-item-option :router-link="`/EditGoal/${goal.id}`"
               >Editar</ion-item-option
             >
-            <ion-item-option
-              color="danger"
-              @click="DeleteGoal(goal.id)"
+            <ion-item-option color="danger" @click="DeleteGoal(goal.id)"
               >Excluir</ion-item-option
             >
           </ion-item-options>
@@ -61,10 +56,10 @@ import {
   IonItemOptions,
   IonContent,
   IonItem,
+  IonButton,
   IonButtons,
-  IonBackButton,
 } from "@ionic/vue";
-import { homeOutline } from "ionicons/icons";
+import { homeOutline, add } from "ionicons/icons";
 
 export default defineComponent({
   name: "GoalPage",
@@ -81,14 +76,12 @@ export default defineComponent({
     IonItemOptions,
     IonContent,
     IonItem,
+    IonButton,
     IonButtons,
-    IonBackButton,
   },
   updated() {
     Store.get().then((response) => {
-      console.log(response)
       Goals.list(response).then((response) => {
-        console.log(response)
         this.goals = response.data;
       });
     });
@@ -96,6 +89,7 @@ export default defineComponent({
   setup() {
     return {
       homeOutline,
+      add,
     };
   },
   data() {

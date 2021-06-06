@@ -21,7 +21,28 @@
             <ion-label>Receita</ion-label>
             <ion-radio value="2"></ion-radio>
           </ion-item>
+
+          <ion-item>
+            <ion-label>Investimento</ion-label>
+            <ion-radio value="3"></ion-radio>
+          </ion-item>
         </ion-radio-group>
+      </ion-item>
+
+      <ion-item v-if="transaction.type == 3">
+        <ion-label position="floating">Meta</ion-label>
+        <ion-select
+          v-model="transaction.goal_id"
+          ok-text="Okay"
+          cancel-text="Dismiss"
+        >
+          <ion-select-option
+            v-for="goal in goals"
+            :key="goal.id"
+            :value="goal.id"
+            >{{ goal.description }}</ion-select-option
+          >
+        </ion-select>
       </ion-item>
 
       <ion-item>
@@ -54,7 +75,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Categorias</ion-label>
+        <ion-label position="floating">Categoria</ion-label>
         <ion-select
           v-model="transaction.category_id"
           ok-text="Okay"
@@ -88,6 +109,7 @@ import Transactions from "../services/transactions";
 import Store from "../store/index";
 import Accounts from "../services/accounts";
 import Categories from "../services/categories";
+import Goals from "../services/goals";
 
 
 import {
@@ -150,6 +172,9 @@ export default defineComponent({
       Categories.list(response).then((response) => {
         this.categories = response.data;
       });
+      Goals.list(response).then((response) => {
+        this.goals = response.data;
+      });
     });
   },
   data() {
@@ -157,6 +182,7 @@ export default defineComponent({
       transaction: {
         type: "",
         account_id: "",
+        goal_id: "",
         description: "",
         date: "",
         category_id: "",
@@ -164,6 +190,7 @@ export default defineComponent({
       },
       accounts: [],
       categories: [],
+      goals: [],
     };
   },
   methods: {

@@ -13,26 +13,36 @@
       <ion-item>
         <ion-label position="floating">Tipo</ion-label>
         <ion-select
-          v-model="account.type"
+          v-model="category.type"
           ok-text="Okay"
           cancel-text="Dismiss"
         >
-          <ion-select-option value="1">Carteira</ion-select-option>
-          <ion-select-option value="2">Conta Corrente</ion-select-option>
-          <ion-select-option value="3">Poupança</ion-select-option>
-          <ion-select-option value="4">Investimentos</ion-select-option>
+          <ion-select-option value="1">Despesa</ion-select-option>
+          <ion-select-option value="2">Receita</ion-select-option>
+          <ion-select-option value="3">Investimento</ion-select-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Descrição</ion-label>
-        <ion-input v-model="account.description" type="text"></ion-input>
+        <ion-input v-model="category.description" type="text"></ion-input>
       </ion-item>
 
+      <ion-item>
+        <ion-label position="floating">Ícone</ion-label>
+        <ion-select
+          v-model="category.icon_id"
+          ok-text="Okay"
+          cancel-text="Dismiss"
+        >
+          <ion-select-option value="1">Alimentação</ion-select-option>
+          <ion-select-option value="2">Moradia</ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-content>
 
     <ion-fab vertical="bottom" horizontal="center">
-      <ion-fab-button @click="UpdateAccount()">
+      <ion-fab-button @click="UpdateCategory()">
         <ion-icon :icon="checkmark"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -40,7 +50,7 @@
 </template>
 
 <script>
-import Accounts from "../services/accounts";
+import Categories from "../services/categories";
 import Store from "../store/index";
 
 import {
@@ -66,7 +76,7 @@ import { checkmark } from "ionicons/icons";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "EditAccount",
+  name: "EditCategory",
   components: {
     IonPage,
     IonHeader,
@@ -91,34 +101,32 @@ export default defineComponent({
   },
   mounted() {
     Store.get().then((response) => {
-      Accounts.account(this.$route.params.id, response).then(
-        (response) => {
-          this.account.type = response.data.type + "";
-          this.account.description = response.data.description + "";
-        }
-      );
+      Categories.category(this.$route.params.id, response).then((response) => {
+        this.category.type = response.data.type + "";
+        this.category.description = response.data.description + "";
+        this.category.icon_id = response.data.icon_id + "";
+      });
     });
   },
   data() {
     return {
-      account: {
+      category: {
         type: "",
         description: "",
+        icon_id: "",
       },
     };
   },
   methods: {
-    UpdateAccount() {
+    UpdateCategory() {
       Store.get().then((response) => {
-        Accounts.update(
-          this.$route.params.id,
-          this.account,
-          response
-        ).then((response) => {
-          if (response.status == 200) {
-            this.$router.push("/accounts");
+        Categories.update(this.$route.params.id, this.category, response).then(
+          (response) => {
+            if (response.status == 200) {
+              this.$router.push("/categories");
+            }
           }
-        });
+        );
       });
     },
   },

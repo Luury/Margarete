@@ -2,9 +2,6 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button default-href="/home"></ion-back-button>
-        </ion-buttons>
         <ion-title>Transações</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -58,8 +55,6 @@ import {
   IonItemOptions,
   IonContent,
   IonItem,
-  IonButtons,
-  IonBackButton,
 } from "@ionic/vue";
 import { homeOutline } from "ionicons/icons";
 
@@ -78,8 +73,6 @@ export default defineComponent({
     IonItemOptions,
     IonContent,
     IonItem,
-    IonButtons,
-    IonBackButton,
   },
   updated() {
     Store.get().then((response) => {

@@ -30,6 +30,14 @@
         }}</ion-note>
       </ion-item>
 
+      <ion-item>
+        <ion-label position="floating" color="warning">Investimentos</ion-label>
+        <ion-input v-model="resume.investment" type="number"> </ion-input>
+        <ion-note slot="end" color="warning">{{
+          resume.investmentAmount
+        }}</ion-note>
+      </ion-item>
+
       <ion-label>Resumo de Contas:</ion-label>
 
       <ion-item v-for="account in accounts" :key="account.id">
@@ -55,6 +63,16 @@
             <ion-input v-model="account.expense" type="number"> </ion-input>
             <ion-note slot="end" color="danger">{{
               account.expenseAmount
+            }}</ion-note>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating" color="warning"
+              >Investimentos</ion-label
+            >
+            <ion-input v-model="account.investment" type="number"> </ion-input>
+            <ion-note slot="end" color="warning">{{
+              account.investmentAmount
             }}</ion-note>
           </ion-item>
         </ion-label>
@@ -97,15 +115,10 @@ export default defineComponent({
   updated() {
     Store.get().then((response) => {
       Home.resume(response).then((response) => {
-        this.resume.balance = response.data.balance + "";
-        this.resume.revenue = response.data.revenue + "";
-        this.resume.expense = response.data.expense + "";
-        this.resume.balanceAmount = response.data.balanceAmount + "";
-        this.resume.revenueAmount = response.data.revenueAmount + "";
-        this.resume.expenseAmount = response.data.expenseAmount + "";
+        this.resume = response.data;
       });
       User.info(response).then((response) => {
-        this.user.username = response.data.username + "";
+        this.user = response.data;
       });
       Accounts.list(response).then((response) => {
         this.accounts = response.data;
@@ -114,17 +127,8 @@ export default defineComponent({
   },
   data() {
     return {
-      resume: {
-        balance: "",
-        revenue: "",
-        expense: "",
-        balanceAmount: "",
-        revenueAmount: "",
-        expenseAmount: "",
-      },
-      user: {
-        username: "",
-      },
+      resume: [],
+      user: [],
       accounts: [],
     };
   },

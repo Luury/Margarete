@@ -5,30 +5,15 @@
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Adicionar Meta</ion-title>
+        <ion-title>Nova Meta</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
 
       <ion-item>
-        <ion-label position="floating">Nome da Meta</ion-label>
+        <ion-label position="floating">Descrição</ion-label>
         <ion-input v-model="goal.description" type="text"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Categorias</ion-label>
-        <ion-select
-          v-model="goal.category_id"
-          ok-text="Okay"
-          cancel-text="Dismiss"
-        >
-          <ion-select-option
-            v-for="category in categories"
-            :key="category.id"
-            :value="category.id"
-            >{{ category.description }}</ion-select-option>
-        </ion-select>
       </ion-item>
 
       <ion-item>
@@ -40,7 +25,7 @@
       </ion-item>
       
       <ion-item>
-        <ion-label position="floating">Data para Terminar</ion-label>
+        <ion-label position="floating">Data de Término</ion-label>
         <ion-datetime
           v-model="goal.date_end"
           display-format="MM DD YY"
@@ -48,14 +33,10 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Valor de Início</ion-label>
-        <ion-input v-model="goal.value_start" type="number"></ion-input>
+        <ion-label position="floating">Valor</ion-label>
+        <ion-input v-model="goal.value" type="number"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Valor que deseja alcançar</ion-label>
-        <ion-input v-model="goal.value_end" type="number"></ion-input>
-      </ion-item>
     </ion-content>
 
     <ion-fab vertical="bottom" horizontal="center">
@@ -70,8 +51,6 @@
 
 import Goals from "../services/goals";
 import Store from "../store/index";
-//import Accounts from "../services/accounts";
-import Categories from "../services/categories";
 
 
 import {
@@ -89,8 +68,6 @@ import {
   IonFab,
   IonFabButton,
   IonDatetime,
-  IonSelectOption,
-  IonSelect,
 } from "@ionic/vue";
 
 import { checkmark } from "ionicons/icons";
@@ -114,36 +91,20 @@ export default defineComponent({
     IonFab,
     IonFabButton,
     IonDatetime,
-    IonSelectOption,
-    IonSelect,
   },
   setup() {
     return {
       checkmark,
     };
   },
-  updated() {
-    Store.get().then((response) => {
-      this.goal.user_id = response.user_id
-      Categories.list(response).then((response) => {
-        this.categories = response.data;
-      });
-    });
-  },
   data() {
     return {
       goal: {
-        user_id:"",
         description: "",
         date_start: "",
         date_end: "",
-        category_id: "",
-        value_start: "",
-        value_end: "",
+        value: "",
       },
-      accounts: [],
-      users:[],
-      categories: [],
     };
   },
   methods: {
