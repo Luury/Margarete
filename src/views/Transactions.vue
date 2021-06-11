@@ -16,8 +16,13 @@
             <ion-icon :icon="homeOutline"></ion-icon>
             <ion-label>
               <h2>{{ transaction.description }}</h2>
-              <h3>{{ transaction.category }}</h3>
-              <h4>{{ transaction.value }}</h4>
+              <h3 id="despesa" v-if="transaction.category_id === 1"
+              >Despesa</h3>
+              <h3 id="receita" v-if="transaction.category_id === 2"
+              > Receita</h3>
+              <h3 id="investimento" v-if="transaction.category_id === 3"
+              > Investimento </h3>
+              <h4>R$ {{ transaction.value }}</h4>
             </ion-label>
           </ion-item>
 
@@ -106,4 +111,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  #despesa{
+    color: var(--ion-color-danger);
+  }
+  #receita{
+    color: var(--ion-color-success);
+  }
+  #investimento{
+    color: var(--ion-color-warning);
+  }
 </style>

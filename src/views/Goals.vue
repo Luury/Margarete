@@ -18,9 +18,9 @@
             <ion-icon :icon="homeOutline"></ion-icon>
             <ion-label>
               <h2>{{ goal.description }}</h2>
-              <h3>{{ goal.value}}</h3>
-              <h4>{{ goal.date_start }}</h4>
-              <h4>{{ goal.date_end }}</h4>
+              <h3>R$ {{ goal.value}}</h3>
+              <h4>Data de início: {{ goal.date_start }}</h4>
+              <h4>Data de término: {{ goal.date_end }}</h4>
             </ion-label>
           </ion-item>
 
@@ -112,4 +112,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  h3{
+    color: var(--ion-color-success);
+  }
 </style>

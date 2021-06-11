@@ -10,8 +10,28 @@
     </ion-header>
 
     <ion-content>
+
+      <ion-item>
+        <ion-radio-group >
+          <ion-item>
+            <ion-label class="ion-margin-end" color="danger">Despesa</ion-label>
+            <ion-radio value="1" @click="NewListCategory(1)"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label class="ion-margin-end" color="success">Receita</ion-label>
+            <ion-radio value="2" @click="NewListCategory(2)"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label class="ion-margin-end" color="warning">Investimento</ion-label>
+            <ion-radio value="3" @click="NewListCategory(3)"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-item>
+
       <ion-list>
-        <ion-item-sliding v-for="category in categories" :key="category.id">
+        <ion-item-sliding v-for="category in newList" :key="category.id">
           <ion-item>
             <ion-icon :icon="cashOutline"></ion-icon>
             <ion-label>
@@ -101,6 +121,7 @@ export default defineComponent({
   data() {
     return {
       categories: [],
+      newList: [],
     };
   },
   methods: {
@@ -113,9 +134,29 @@ export default defineComponent({
         });
       });
     },
+    NewListCategory(value){
+      Store.get().then((response) => {
+            Categories.list(response).then((response) => {
+              this.newList.splice(0, this.newList.length);
+              for(let i = 0; i < response.data.length; i++){
+                if(value === response.data[i].type){
+                  this.newList.push(response.data[i])
+                }
+              }
+              console.log(this.newList)
+              return this.newList
+            });
+
+          
+      });
+    }
   },
 });
 </script>
 
 <style scoped>
+ion-radio-group {
+  display: flex;
+}
+
 </style>

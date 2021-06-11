@@ -13,18 +13,18 @@
       <ion-item>
         <ion-radio-group v-model="transaction.type">
           <ion-item>
-            <ion-label>Despesa</ion-label>
-            <ion-radio value="1"></ion-radio>
+            <ion-label class="ion-margin-end" color="danger">Despesa</ion-label>
+            <ion-radio value="1" @click="NewListCategory(1)"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label>Receita</ion-label>
-            <ion-radio value="2"></ion-radio>
+            <ion-label class="ion-margin-end" color="success">Receita</ion-label>
+            <ion-radio value="2" @click="NewListCategory(2)"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label>Investimento</ion-label>
-            <ion-radio value="3"></ion-radio>
+            <ion-label class="ion-margin-end" color="warning">Investimento</ion-label>
+            <ion-radio value="3" @click="NewListCategory(3)"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-item>
@@ -82,7 +82,7 @@
           cancel-text="Dismiss"
         >
           <ion-select-option
-            v-for="category in categories"
+            v-for="category  in categories"
             :key="category.id"
             :value="category.id"
             >{{ category.description }}</ion-select-option
@@ -137,6 +137,7 @@ import { checkmark } from "ionicons/icons";
 
 import { defineComponent } from "vue";
 
+
 export default defineComponent({
   name: "AddTransaction",
   components: {
@@ -164,13 +165,13 @@ export default defineComponent({
       checkmark,
     };
   },
-  updated() {
+    updated() {
     Store.get().then((response) => {
       Accounts.list(response).then((response) => {
         this.accounts = response.data;
       });
       Categories.list(response).then((response) => {
-        this.categories = response.data;
+        this.categories = response.data; 
       });
       Goals.list(response).then((response) => {
         this.goals = response.data;
@@ -191,6 +192,7 @@ export default defineComponent({
       accounts: [],
       categories: [],
       goals: [],
+      newList: [],
     };
   },
   methods: {
@@ -203,7 +205,23 @@ export default defineComponent({
         });
       });
     },
+    NewListCategory(value){
+      Store.get().then((response) => {
+            Categories.list(response).then((response) => {
+              this.newList.splice(0, this.newList.length);
+              for(let i = 0; i < response.data.length; i++){
+                if(value === response.data[i].type){
+                  this.newList.push(response.data[i])
+                }
+              }
+              console.log(this.newList)
+              return this.newList
+            });
+      });
+    }
+    
   },
+
 });
 </script>
 

@@ -21,7 +21,7 @@ import EditCategoryPage from '../views/EditCategory.vue';
 import GoalsPage from '../views/Goals.vue';
 import AddGoalPage from '../views/AddGoal.vue';
 import EditGoalPage from '../views/EditGoal.vue';
-import GoalsTransactionsPage from '../views/EditGoal.vue';
+//import GoalsTransactionsPage from '../views/EditGoal.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
