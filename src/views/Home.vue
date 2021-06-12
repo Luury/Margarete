@@ -77,6 +77,21 @@
           </ion-item>
         </ion-label>
       </ion-item>
+
+      <ion-label>Resumo de Metas:</ion-label>
+      <ion-item v-for="goal in goals" :key="goal.id">
+        <ion-label>
+          <h2>{{ goal.description }}</h2>
+
+          <ion-item>
+            <h3>{{ goal.investment }} / {{ goal.value }}</h3>
+            <ion-note slot="end" color="warning">{{
+              goal.investmentAmount
+            }}</ion-note>
+          </ion-item>
+          <ion-progress-bar :value="goal.percentage"></ion-progress-bar>
+        </ion-label>
+      </ion-item>
     </ion-content>
   </ion-page>
 </template>
@@ -85,6 +100,7 @@
 import Home from "../services/home";
 import User from "../services/user";
 import Accounts from "../services/accounts";
+import Goals from "../services/goals";
 import Store from "../store/index";
 
 import {
@@ -97,6 +113,7 @@ import {
   IonLabel,
   IonInput,
   IonNote,
+  IonProgressBar,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 
@@ -111,6 +128,23 @@ export default defineComponent({
     IonLabel,
     IonInput,
     IonNote,
+    IonProgressBar,
+  },
+  mounted() {
+    Store.get().then((response) => {
+      Home.resume(response).then((response) => {
+        this.resume = response.data;
+      });
+      User.info(response).then((response) => {
+        this.user = response.data;
+      });
+      Accounts.list(response).then((response) => {
+        this.accounts = response.data;
+      });
+      Goals.list(response).then((response) => {
+        this.goals = response.data;
+      });
+    });
   },
   updated() {
     Store.get().then((response) => {
@@ -123,6 +157,9 @@ export default defineComponent({
       Accounts.list(response).then((response) => {
         this.accounts = response.data;
       });
+      Goals.list(response).then((response) => {
+        this.goals = response.data;
+      });
     });
   },
   data() {
@@ -130,6 +167,7 @@ export default defineComponent({
       resume: [],
       user: [],
       accounts: [],
+      goals: [],
     };
   },
 });
