@@ -11,7 +11,7 @@
 
     <ion-content>
       <ion-item>
-        <ion-radio-group v-model="transaction.type">
+        <ion-radio-group v-model="transaction.type" @click="Filter()">
           <ion-item>
             <ion-label>Despesa</ion-label>
             <ion-radio value="1"></ion-radio>
@@ -169,9 +169,11 @@ export default defineComponent({
       Accounts.list(response).then((response) => {
         this.accounts = response.data;
       });
-      Categories.list(response).then((response) => {
-        this.categories = response.data;
-      });
+      Categories.listByType(this.transaction.type, response).then(
+        (response) => {
+          this.categories = response.data;
+        }
+      );
       Goals.list(response).then((response) => {
         this.goals = response.data;
       });
@@ -180,7 +182,7 @@ export default defineComponent({
   data() {
     return {
       transaction: {
-        type: "",
+        type: "1",
         account_id: "",
         goal_id: "",
         description: "",
@@ -194,6 +196,16 @@ export default defineComponent({
     };
   },
   methods: {
+    Filter() {
+      Store.get().then((response) => {
+        Categories.listByType(this.transaction.type, response).then(
+          (response) => {
+            this.categories = response.data;
+            this.transaction.category_id = null;
+          }
+        );
+      });
+    },
     AddTransaction() {
       Store.get().then((response) => {
         Transactions.create(this.transaction, response).then((response) => {
