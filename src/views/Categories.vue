@@ -10,22 +10,25 @@
     </ion-header>
 
     <ion-content>
-
       <ion-item>
-        <ion-radio-group >
+        <ion-radio-group
+          v-model="select.type"
+          @click="Filter()"
+          allow-empty-selection="true"
+        >
           <ion-item>
-            <ion-label class="ion-margin-end" color="danger">Despesa</ion-label>
-            <ion-radio value="1" @click="NewListCategory(1)"></ion-radio>
+            <ion-label>Despesa</ion-label>
+            <ion-radio value="1"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label class="ion-margin-end" color="success">Receita</ion-label>
-            <ion-radio value="2" @click="NewListCategory(2)"></ion-radio>
+            <ion-label>Receita</ion-label>
+            <ion-radio value="2"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label class="ion-margin-end" color="warning">Investimento</ion-label>
-            <ion-radio value="3" @click="NewListCategory(3)"></ion-radio>
+            <ion-label>Investimento</ion-label>
+            <ion-radio value="3"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-item>
@@ -82,6 +85,8 @@ import {
   IonBackButton,
   IonFab,
   IonFabButton,
+  IonRadio,
+  IonRadioGroup,
 } from "@ionic/vue";
 import { cashOutline, add } from "ionicons/icons";
 
@@ -104,6 +109,8 @@ export default defineComponent({
     IonBackButton,
     IonFab,
     IonFabButton,
+    IonRadio,
+    IonRadioGroup,
   },
   updated() {
     Store.get().then((response) => {
@@ -121,10 +128,26 @@ export default defineComponent({
   data() {
     return {
       categories: [],
-      newList: [],
+      select: {
+        type: "",
+      },
     };
   },
   methods: {
+    Filter() {
+      Store.get().then((response) => {
+        if (this.select.type == "") {
+          Categories.list(response).then((response) => {
+            this.categories = response.data;
+          });
+        } else {
+          Categories.listByType(this.select.type, response).then((response) => {
+            this.categories = response.data;
+          });
+        }
+      });
+    },
+
     DeleteCategory(CategoryId) {
       Store.get().then((response) => {
         Categories.delete(CategoryId, response).then((response) => {
@@ -147,7 +170,7 @@ export default defineComponent({
               return this.newList
             });
 
-          
+
       });
     }
   },
@@ -158,5 +181,4 @@ export default defineComponent({
 ion-radio-group {
   display: flex;
 }
-
 </style>

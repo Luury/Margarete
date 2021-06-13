@@ -6,6 +6,10 @@ export default {
         return http.get('/category', { headers: { "Authorization": `Bearer ${token}` } })
     },
 
+    listByType: (param, token) => {
+        return http.get('/category/type/'  + param, { headers: { "Authorization": `Bearer ${token}` } })
+    },
+
     category: (param, token) => {
         return http.get('/category/' + param, { headers: { "Authorization": `Bearer ${token}` } })
     },
