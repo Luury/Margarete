@@ -8,6 +8,7 @@
     <ion-content class="ion-padding">
       <ion-button router-link="/accounts" expand="block">Contas</ion-button>
       <ion-button router-link="/categories" expand="block">Categorias</ion-button>
+      <ion-button router-link="/faq" expand="block">Perguntas Frequentes</ion-button>
     </ion-content>
   </ion-page>
 </template>

@@ -23,6 +23,8 @@ import AddGoalPage from '../views/AddGoal.vue';
 import EditGoalPage from '../views/EditGoal.vue';
 import GoalsTransactionsPage from '../views/EditGoal.vue';
 
+import FaqPage from '../views/Faq.vue'
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -129,6 +131,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/EditGoal/:id',
     name:'EditGoalPage',
     component: EditGoalPage, 
+  },
+  {
+    path: '/Faq',
+    name:'FaqPage',
+    component: FaqPage, 
   }
 ]
 
