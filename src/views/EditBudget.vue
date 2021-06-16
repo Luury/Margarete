@@ -5,40 +5,40 @@
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>Editar Meta</ion-title>
+        <ion-title>Editar Orçamento</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
       <ion-item>
         <ion-label position="floating">Descrição</ion-label>
-        <ion-input v-model="goal.description" type="text"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Data de Início</ion-label>
-        <ion-datetime
-          v-model="goal.date_start"
-          display-format="MM DD YY"
-        ></ion-datetime>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Data de Término</ion-label>
-        <ion-datetime
-          v-model="goal.date_end"
-          display-format="MM DD YY"
-        ></ion-datetime>
+        <ion-input v-model="budget.description" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Valor</ion-label>
-        <ion-input v-model="goal.value" type="number"></ion-input>
+        <ion-input v-model="budget.value" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Categoria</ion-label>
+        <ion-select
+          v-model="category_id"
+          ok-text="Okay"
+          cancel-text="Dismiss"
+        >
+          <ion-select-option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.id"
+            >{{ category.description }}</ion-select-option
+          >
+        </ion-select>
       </ion-item>
     </ion-content>
 
     <ion-fab vertical="bottom" horizontal="center">
-      <ion-fab-button @click="UpdateGoal()">
+      <ion-fab-button @click="UpdateBudget()">
         <ion-icon :icon="checkmark"></ion-icon>
       </ion-fab-button>
     </ion-fab>
@@ -46,8 +46,9 @@
 </template>
 
 <script>
-import Goals from "../services/goals";
 import Store from "../store/index";
+import Categories from "../services/categories";
+import Budgets from "../services/budgets";
 
 import {
   IonPage,
@@ -63,7 +64,9 @@ import {
   IonIcon,
   IonFab,
   IonFabButton,
-  IonDatetime,
+  IonSelectOption,
+  IonSelect,
+
 } from "@ionic/vue";
 
 import { checkmark } from "ionicons/icons";
@@ -86,7 +89,9 @@ export default defineComponent({
     IonIcon,
     IonFab,
     IonFabButton,
-    IonDatetime,
+    IonSelectOption,
+    IonSelect,
+ 
   },
   setup() {
     return {
@@ -95,34 +100,42 @@ export default defineComponent({
   },
   mounted() {
     Store.get().then((response) => {
-      Goals.goal(this.$route.params.id, response).then((response) => {
-        this.goal.description = response.data.description + "";
-        this.goal.date_start = response.data.date_start.replace("Z", "") + "";
-        this.goal.date_end = response.data.date_end.replace("Z", "") + "";
-        this.goal.value = response.data.value + "";
+      Budgets.budget(this.$route.params.id, response).then((response) => {
+        this.budget.description = response.data.description + "";
+        this.budget.month_start = response.data.month_start.replace("Z", "") + "";
+        this.budget.category_id = response.data.category_id;
+        this.budget.value = response.data.value + "";
       });
+    });
+  },
+    updated() {
+    Store.get().then((response) => {
+      Categories.listByType(1, response).then(
+        (response) => {
+          this.categories = response.data;
+        }
+      );
     });
   },
   data() {
     return {
-      goal: {
+      budget: {
         description: "",
-        date_start: "",
-        date_end: "",
+        category_id:null,
         value: "",
       },
     };
   },
   methods: {
-    UpdateGoal() {
+    UpdateBudget() {
       Store.get().then((response) => {
-        Goals.update(
+        Budgets.update(
           this.$route.params.id,
-          this.goal,
+          this.budget,
           response
         ).then((response) => {
           if (response.status == 200) {
-            this.$router.push("/goals");
+            this.$router.push("/budgets");
           }
         });
       });

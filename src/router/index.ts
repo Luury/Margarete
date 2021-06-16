@@ -21,9 +21,13 @@ import EditCategoryPage from '../views/EditCategory.vue';
 import GoalsPage from '../views/Goals.vue';
 import AddGoalPage from '../views/AddGoal.vue';
 import EditGoalPage from '../views/EditGoal.vue';
-import GoalsTransactionsPage from '../views/EditGoal.vue';
+//import GoalsTransactionsPage from '../views/EditGoal.vue';
 
 import FaqPage from '../views/Faq.vue'
+
+import BudgetsPage from '../views/Budgets.vue';
+import AddBudgetPage from '../views/AddBudget.vue';
+import EditBudgetPage from '../views/EditBudget.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -136,7 +140,23 @@ const routes: Array<RouteRecordRaw> = [
     path: '/Faq',
     name:'FaqPage',
     component: FaqPage, 
-  }
+  },
+  {
+    path: '/Budgets',
+    name: 'Budgets',
+    component: BudgetsPage
+  },
+  {
+    path: '/AddBudget/',
+    name: 'AddBudget',
+    component: AddBudgetPage
+  },
+  {
+    path: '/EditBudget/:id',
+    name: 'EditBudget',
+    component: EditBudgetPage
+  },
+  
 ]
 
 const router = createRouter({
