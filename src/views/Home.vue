@@ -81,17 +81,28 @@
       <ion-label>Resumo de Metas:</ion-label>
       <ion-item v-for="goal in goals" :key="goal.id">
         <ion-label>
-          <h2>{{ goal.description }}</h2>
+          <h3>{{ goal.description }}</h3>
 
           <ion-item>
-            <h3>{{ goal.investment }} / {{ goal.value }}</h3>
-            <ion-note slot="end" color="warning">{{
-              goal.investmentAmount
-            }}</ion-note>
+            <h2>R${{ goal.investment }} / R${{ goal.value }}</h2>
+            <ion-note slot="end" color="warning">{{goal.percentagemTrunc}}%</ion-note>
           </ion-item>
           <ion-progress-bar :value="goal.percentage"></ion-progress-bar>
         </ion-label>
       </ion-item>
+
+    <ion-label>Resumo dos Orçamentos:</ion-label>
+      <ion-item v-for="budget in budgets" :key="budget.id">
+        <ion-label>
+          <h3>{{ budget.description }}</h3>
+          <ion-item>
+            <h2>R${{ budget.budgetAmount }} / R${{ budget.value }}</h2>
+          <ion-note slot="end" color="warning">{{ budget.percentagemTrunc }}%</ion-note>
+          </ion-item>
+          <ion-progress-bar :value="budget.percentage"></ion-progress-bar>
+        </ion-label>
+      </ion-item>
+
     </ion-content>
   </ion-page>
 </template>
@@ -101,6 +112,7 @@ import Home from "../services/home";
 import User from "../services/user";
 import Accounts from "../services/accounts";
 import Goals from "../services/goals";
+import Budgets from "../services/budgets";
 import Store from "../store/index";
 
 import {
@@ -144,6 +156,10 @@ export default defineComponent({
       Goals.list(response).then((response) => {
         this.goals = response.data;
       });
+      Budgets.list(response).then((response) => {
+        this.budgets = response.data;
+      });
+      
     });
   },
   updated() {
@@ -160,6 +176,9 @@ export default defineComponent({
       Goals.list(response).then((response) => {
         this.goals = response.data;
       });
+      Budgets.list(response).then((response) => {
+        this.budgets = response.data;
+      });
     });
   },
   data() {
@@ -168,6 +187,7 @@ export default defineComponent({
       user: [],
       accounts: [],
       goals: [],
+      budgets: [],
     };
   },
 });

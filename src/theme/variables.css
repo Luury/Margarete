@@ -1,5 +1,9 @@
-/* Ionic Variables and Theming. For more info, please see:
-http://ionicframework.com/docs/theming/ */
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,900&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600&family=Roboto:ital,wght@0,400;1,900&family=Satisfy&display=swap');
+
+
+
 
 /** Ionic CSS Variables **/
 :root {
@@ -233,4 +237,5 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-card-background: #1e1e1e;
   }
+
 }

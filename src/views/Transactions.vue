@@ -16,8 +16,8 @@
             <ion-icon :icon="homeOutline"></ion-icon>
             <ion-label>
               <h2>{{ transaction.description }}</h2>
-              <h3>{{ transaction.category }}</h3>
-              <h4>{{ transaction.value }}</h4>
+              <h3>{{ transaction.category_id }}</h3>
+              <h4>R$ {{ transaction.value }}</h4>
             </ion-label>
           </ion-item>
 

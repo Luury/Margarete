@@ -21,9 +21,10 @@
             <ion-icon :icon="homeOutline"></ion-icon>
             <ion-label>
               <h2>{{budget.description }}</h2>
-              <h3>{{budget.BudgeAmount}}/{{ budget.value}}</h3>
+              <h3>R${{budget.budgetAmount}} / R${{ budget.value}}</h3>
               <ion-progress-bar :value="budget.percentage"></ion-progress-bar>
             </ion-label>
+              <ion-note slot="center" color="warning">{{ budget.percentagemTrunc }}%</ion-note>
           </ion-item>
 
           <ion-item-options side="end">
@@ -61,6 +62,7 @@ import {
   IonButton,
   IonButtons,
   IonProgressBar,
+  IonBackButton,
 } from "@ionic/vue";
 import { homeOutline, add } from "ionicons/icons";
 
@@ -82,6 +84,7 @@ export default defineComponent({
     IonButton,
     IonButtons,
     IonProgressBar,
+    IonBackButton,
   },
   updated() {
     Store.get().then((response) => {
@@ -116,4 +119,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  h3{
+    color: var(--ion-color-success);
+  }
 </style>
