@@ -2,33 +2,36 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button default-href="/more"></ion-back-button>
+        </ion-buttons>
         <ion-buttons slot="end">
-          <ion-button router-link="/addGoal">
+          <ion-button router-link="/addBudget">
             <ion-icon slot="icon-only" :icon="add"></ion-icon>
           </ion-button>
         </ion-buttons>
-        <ion-title>Metas</ion-title>
+        <ion-title>Orçamentos</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
       <ion-list>
-        <ion-item-sliding v-for="goal in goals" :key="goal.id">
+        <ion-item-sliding v-for="budget in budgets" :key="budget.id">
           <ion-item>
             <ion-icon :icon="homeOutline"></ion-icon>
             <ion-label>
-              <h2>{{ goal.description }}</h2>
-              <h3>R$ {{ goal.value}}</h3>
-              <h4>{{ goal.date_start }}</h4>
-              <h4>{{ goal.date_end }}</h4>
+              <h2>{{budget.description }}</h2>
+              <h3>R${{budget.budgetAmount}} / R${{ budget.value}}</h3>
+              <ion-progress-bar :value="budget.percentage"></ion-progress-bar>
             </ion-label>
+              <ion-note slot="center" color="warning">{{ budget.percentagemTrunc }}%</ion-note>
           </ion-item>
 
           <ion-item-options side="end">
-            <ion-item-option :router-link="`/EditGoal/${goal.id}`"
+            <ion-item-option :router-link="`/EditBudget/${budget.id}`"
               >Editar</ion-item-option
             >
-            <ion-item-option color="danger" @click="DeleteGoal(goal.id)"
+            <ion-item-option color="danger" @click="DeleteBudget(budget.id)"
               >Excluir</ion-item-option
             >
           </ion-item-options>
@@ -39,7 +42,7 @@
 </template>
 
 <script>
-import Goals from "../services/goals";
+import Budgets from "../services/budgets";
 import Store from "../store/index";
 
 import { defineComponent } from "vue";
@@ -58,11 +61,13 @@ import {
   IonItem,
   IonButton,
   IonButtons,
+  IonProgressBar,
+  IonBackButton,
 } from "@ionic/vue";
 import { homeOutline, add } from "ionicons/icons";
 
 export default defineComponent({
-  name: "GoalPage",
+  name: "BudgetsPage",
   components: {
     IonIcon,
     IonLabel,
@@ -78,11 +83,13 @@ export default defineComponent({
     IonItem,
     IonButton,
     IonButtons,
+    IonProgressBar,
+    IonBackButton,
   },
   updated() {
     Store.get().then((response) => {
-      Goals.list(response).then((response) => {
-        this.goals = response.data;
+      Budgets.list(response).then((response) => {
+        this.budgets = response.data;
       });
     });
   },
@@ -94,13 +101,13 @@ export default defineComponent({
   },
   data() {
     return {
-      goals: [],
+      budgets: [],
     };
   },
   methods: {
-    DeleteGoal(GoalId) {
+    DeleteBudget(BudgetID) {
       Store.get().then((response) => {
-        Goals.delete(GoalId, response).then((response) => {
+        Budgets.delete(BudgetID, response).then((response) => {
           if (response.status == 200) {
             this.$forceUpdate();
           }
@@ -112,7 +119,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-h3{
-  color: var(--ion-color-success);
-}
+  h3{
+    color: var(--ion-color-success);
+  }
 </style>

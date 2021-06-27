@@ -17,17 +17,17 @@
           allow-empty-selection="true"
         >
           <ion-item>
-            <ion-label>Despesa</ion-label>
+            <ion-label class="despesa">Despesa</ion-label>
             <ion-radio value="1"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label>Receita</ion-label>
+            <ion-label class="receita">Receita</ion-label>
             <ion-radio value="2"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label>Investimento</ion-label>
+            <ion-label class="investimento">Investimento</ion-label>
             <ion-radio value="3"></ion-radio>
           </ion-item>
         </ion-radio-group>
@@ -162,7 +162,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-ion-radio-group {
-  display: flex;
-}
+  
+  ion-radio-group {
+    display: flex;
+  }
 </style>
